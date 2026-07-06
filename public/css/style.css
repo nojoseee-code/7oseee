@@ -1,0 +1,329 @@
+/* ============================================================
+   Design tokens
+   A license/ops console for a script vendor, not a marketing
+   site - so the palette leans "server room at night" rather
+   than "storefront". Keys, IPs and timestamps get a monospace
+   treatment throughout because they are literally data, not copy.
+   ============================================================ */
+:root {
+  --bg: #12141a;
+  --panel: #1b1f27;
+  --panel-raised: #21262f;
+  --border: #2a2f3a;
+  --text: #e8e6e1;
+  --text-muted: #8b93a1;
+  --text-faint: #565d6b;
+
+  --accent: #e8a33d;
+  --accent-dim: #a97a34;
+  --accent-ink: #241a08;
+
+  --ok: #3ecf8e;
+  --warn: #f2994a;
+  --danger: #e5484d;
+
+  --font-display: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+a { color: inherit; }
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.4em 0;
+}
+
+code, .mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Layout shells ---------- */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 32px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: rgba(18, 20, 26, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.brand .dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(232, 163, 61, 0.18);
+}
+
+.shell {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: calc(100vh - 65px);
+}
+
+.sidenav {
+  border-right: 1px solid var(--border);
+  padding: 24px 16px;
+}
+
+.sidenav a {
+  display: block;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.92rem;
+  margin-bottom: 2px;
+}
+
+.sidenav a.active, .sidenav a:hover {
+  background: var(--panel);
+  color: var(--text);
+}
+
+.main {
+  padding: 32px 36px;
+}
+
+/* ---------- Buttons & forms ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border);
+  background: var(--panel-raised);
+  color: var(--text);
+  padding: 9px 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s ease, transform 0.1s ease;
+  text-decoration: none;
+}
+.btn:hover { border-color: var(--accent-dim); }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+.btn-primary:hover { border-color: var(--accent); filter: brightness(1.06); }
+
+.btn-danger { color: var(--danger); }
+.btn-danger:hover { border-color: var(--danger); }
+
+.btn-sm { padding: 6px 11px; font-size: 0.8rem; }
+
+input[type="text"], input[type="number"], select, textarea {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  padding: 9px 11px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  width: 100%;
+}
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--accent-dim);
+  outline-offset: 1px;
+}
+label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+/* ---------- Cards ---------- */
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+}
+
+.card + .card { margin-top: 16px; }
+
+.card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ---------- Status / heartbeat (the signature element) ----------
+   Every license shows a small pulsing dot + relative time since
+   the script last phoned home to validate itself. It's the one
+   place the design gets to say "this system is alive", grounded
+   in what the product actually does. */
+
+.heartbeat {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.heartbeat .pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: relative;
+}
+.heartbeat .pulse.ok { background: var(--ok); }
+.heartbeat .pulse.stale { background: var(--text-faint); }
+.heartbeat .pulse.down { background: var(--danger); }
+
+.heartbeat .pulse.ok::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 1px solid var(--ok);
+  animation: pulse-ring 2.2s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .heartbeat .pulse.ok::after { animation: none; }
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+/* ---------- Badges ---------- */
+
+.badge {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.badge-ok { background: rgba(62, 207, 142, 0.14); color: var(--ok); }
+.badge-warn { background: rgba(242, 153, 74, 0.14); color: var(--warn); }
+.badge-danger { background: rgba(229, 72, 77, 0.14); color: var(--danger); }
+.badge-muted { background: rgba(139, 147, 161, 0.12); color: var(--text-muted); }
+
+/* ---------- Data table (admin) ---------- */
+
+table { width: 100%; border-collapse: collapse; }
+th {
+  text-align: left;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-faint);
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+}
+td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+  vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+
+/* ---------- Misc ---------- */
+
+.muted { color: var(--text-muted); }
+.faint { color: var(--text-faint); }
+.stack { display: flex; flex-direction: column; gap: 8px; }
+.row { display: flex; align-items: center; gap: 10px; }
+.spread { display: flex; align-items: center; justify-content: space-between; }
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--panel-raised);
+  border: 1px solid var(--border);
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  max-width: 320px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  animation: toast-in 0.2s ease;
+}
+@keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 100;
+}
+.modal {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  width: 380px;
+  max-width: calc(100vw - 32px);
+}
+
+@media (max-width: 720px) {
+  .app-shell { grid-template-columns: 1fr; }
+  .sidenav { display: flex; border-right: none; border-bottom: 1px solid var(--border); overflow-x: auto; padding: 12px; }
+  .sidenav a { white-space: nowrap; }
+  .main { padding: 20px; }
+}

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="brand" style="text-decoration:none;"><span class="dot"></span> <span id="site-name">Script Store</span></a>
+  <div id="auth-slot" class="row"></div>
+</div>
+
+<div class="app-shell">
+  <nav class="sidenav">
+    <a href="/dashboard.html" class="active">My licenses</a>
+    <a href="/">Store</a>
+    <a href="/admin.html" id="admin-link" style="display:none;">Anwar Panel</a>
+  </nav>
+
+  <div class="main">
+    <h1 style="font-size: 1.5rem; margin-bottom: 4px;">My licenses</h1>
+    <p class="muted" style="margin-bottom: 28px;">Manage the IP lock, server label, and downloads for everything you own.</p>
+
+    <div id="license-list" class="stack"></div>
+  </div>
+</div>
+
+<div id="modal-root"></div>
+<div id="toast-root"></div>
+
+<script src="/js/dashboard.js"></script>
+</body>
+</html>

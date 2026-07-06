@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anwar Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <a href="/" class="brand" style="text-decoration:none;"><span class="dot"></span> Anwar Panel</a>
+  <div id="auth-slot" class="row"></div>
+</div>
+
+<div class="app-shell">
+  <nav class="sidenav">
+    <a href="#products" class="nav-link active" data-tab="products">Products</a>
+    <a href="#licenses" class="nav-link" data-tab="licenses">Licenses</a>
+    <a href="/dashboard.html">My licenses</a>
+    <a href="/">Store</a>
+  </nav>
+
+  <div class="main">
+    <div id="guard" style="display:none;" class="card empty-state">
+      This panel is for admins only. If you believe this is a mistake, ask
+      the site owner to add your Discord ID to <code>ADMIN_DISCORD_IDS</code>.
+    </div>
+
+    <div id="panel-content">
+      <section id="tab-products">
+        <div class="spread" style="margin-bottom:20px;">
+          <h1 style="font-size:1.4rem; margin:0;">Products</h1>
+          <button class="btn btn-primary btn-sm" id="new-product-btn">New product</button>
+        </div>
+        <div class="card" style="overflow-x:auto;">
+          <table id="products-table">
+            <thead><tr><th>Name</th><th>Slug</th><th>Price</th><th>Version</th><th>File</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="tab-licenses" style="display:none;">
+        <div class="spread" style="margin-bottom:20px;">
+          <h1 style="font-size:1.4rem; margin:0;">Licenses</h1>
+          <button class="btn btn-primary btn-sm" id="new-license-btn">Issue license</button>
+        </div>
+        <div class="card" style="overflow-x:auto;">
+          <table id="licenses-table">
+            <thead><tr><th>Product</th><th>Discord ID</th><th>Key</th><th>IP lock</th><th>Status</th><th></th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div id="modal-root"></div>
+<div id="toast-root"></div>
+
+<script src="/js/admin.js"></script>
+</body>
+</html>

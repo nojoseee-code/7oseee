@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Script Store</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand"><span class="dot"></span> <span id="site-name">Script Store</span></div>
+  <div id="auth-slot" class="row"></div>
+</div>
+
+<div class="shell">
+
+  <section style="padding: 48px 0 56px; border-bottom: 1px solid var(--border); margin-bottom: 40px;">
+    <div class="heartbeat" style="margin-bottom: 18px;">
+      <span class="pulse ok"></span> license server online
+    </div>
+    <h1 style="font-size: 2.4rem; max-width: 620px;">Resources for your FiveM server, licensed to run on it and nowhere else.</h1>
+    <p class="muted" style="max-width: 520px; font-size: 1rem;">
+      Every purchase locks to your server the first time it starts, and stays
+      under your control from a dashboard or straight from Discord.
+    </p>
+  </section>
+
+  <h2 style="font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-faint); margin-bottom: 18px;">Available resources</h2>
+  <div id="product-list" class="stack"></div>
+
+</div>
+
+<script>
+async function main() {
+  const cfg = await fetch('/api/config').then(r => r.json()).catch(() => ({}));
+  if (cfg.siteName) {
+    document.getElementById('site-name').textContent = cfg.siteName;
+    document.title = cfg.siteName;
+  }
+
+  const authSlot = document.getElementById('auth-slot');
+  const me = await fetch('/auth/me').then(r => (r.ok ? r.json() : null)).catch(() => null);
+  if (me && me.user) {
+    authSlot.innerHTML = `
+      <img src="${me.user.avatar}" width="26" height="26" style="border-radius:50%" alt="">
+      <span class="muted" style="margin-right:8px">${escapeHtml(me.user.username)}</span>
+      <a class="btn" href="/dashboard.html">Dashboard</a>
+    `;
+  } else {
+    authSlot.innerHTML = `<a class="btn btn-primary" href="/auth/discord">Login with Discord</a>`;
+  }
+
+  const list = document.getElementById('product-list');
+  const { products } = await fetch('/api/products').then(r => r.json()).catch(() => ({ products: [] }));
+
+  if (!products.length) {
+    list.innerHTML = `<div class="card empty-state">No products listed yet. Add some from the admin panel.</div>`;
+    return;
+  }
+
+  list.innerHTML = products.map(p => `
+    <div class="card card-row">
+      <div>
+        <div class="row" style="margin-bottom:6px;">
+          <h3 style="margin:0;">${escapeHtml(p.name)}</h3>
+          <span class="badge badge-muted mono">v${escapeHtml(p.version || '1.0.0')}</span>
+        </div>
+        <p class="muted" style="margin:0; max-width: 480px;">${escapeHtml(p.description || 'No description yet.')}</p>
+      </div>
+      <div style="text-align:right;">
+        <div class="mono" style="font-size:1.3rem; margin-bottom:8px;">${p.price ? '$' + p.price : 'Free'}</div>
+        <a class="btn btn-primary btn-sm" href="/dashboard.html">Get access</a>
+      </div>
+    </div>
+  `).join('');
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+main();
+</script>
+</body>
+</html>
