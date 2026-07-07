@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Xo Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">Xo<span>STORE</span></div>
+      <nav class="nav-links">
+        <a href="#products">السكربتات</a>
+        <a href="#lookup">فحص الترخيص</a>
+        <a href="#" class="btn-discord" id="discordLink" target="_blank" rel="noopener">انضم للديسكورد</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-shape" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <p class="eyebrow">FiveM Scripts · Licensed &amp; Protected</p>
+        <h1>ابنِ سيرفرك<br /><span class="accent">بثقة.</span></h1>
+        <p class="hero-sub">سكربتات مرخّصة، محمية بتشفير قوي، وتسليم وإدارة فورية عبر بوت الديسكورد.</p>
+        <div class="hero-cta">
+          <a href="#products" class="btn-primary">تصفح السكربتات</a>
+          <a href="#lookup" class="btn-ghost">تحقق من ترخيصك</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="products" id="products">
+      <h2><span class="num">01</span> السكربتات</h2>
+      <div class="product-grid">
+        <article class="product-card">
+          <div class="product-tag">PANEL</div>
+          <h3>Xo_Panel</h3>
+          <p>لوحة تحكم وإدارة كاملة لسيرفرك من مكان واحد.</p>
+          <a href="#" class="btn-outline discord-link">عرض بالديسكورد</a>
+        </article>
+        <article class="product-card">
+          <div class="product-tag">ANTI-CHEAT</div>
+          <h3>Xo_ac</h3>
+          <p>حماية من الغش تحافظ على تجربة لعب عادلة للجميع.</p>
+          <a href="#" class="btn-outline discord-link">عرض بالديسكورد</a>
+        </article>
+        <article class="product-card">
+          <div class="product-tag">FILES</div>
+          <h3>XoFilesV3</h3>
+          <p>نظام تسليم وإدارة ملفات لسكربتاتك بشكل آمن.</p>
+          <a href="#" class="btn-outline discord-link">عرض بالديسكورد</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="lookup" id="lookup">
+      <h2><span class="num">02</span> فحص الترخيص</h2>
+      <p class="lookup-sub">حط مفتاح الترخيص تبعك عشان تشوف حالته وآخر آيبي مسجّل.</p>
+      <div class="lookup-box">
+        <input type="text" id="licenseKeyInput" placeholder="Xo-XXXXXX-XXXXXX-XXXXXX" autocomplete="off" />
+        <button id="checkBtn">تحقق</button>
+      </div>
+      <div id="lookupResult" class="lookup-result hidden"></div>
+      <p class="lookup-note">* الفحص يحتاج إن بوت الديسكورد يكون شغّال ومتصل بهذا الموقع.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Made By 7oseee</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
